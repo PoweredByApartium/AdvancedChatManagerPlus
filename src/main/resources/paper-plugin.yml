@@ -1,0 +1,7 @@
+name: AdvancedChatManagerPlus
+version: '1.0-SNAPSHOT'
+main: org.example.advancedChatManagerPlus.PaperAppLoader
+prefix: ACMP
+load: STARTUP
+author: OfirTIM
+description: Advanced Tool to manage and control your chat.
