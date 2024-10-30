@@ -1,6 +1,6 @@
 package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
 
-import net.ofirtim.advancedchatmanagerplus.api.PluginPlayer;
+import net.ofirtim.advancedchatmanagerplus.api.structs.ChatPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,14 +10,24 @@ public class PlayerManager {
 
     private static final PlayerManager instance = new PlayerManager();
 
-    private static final Map<UUID, PluginPlayer> playerCache = new HashMap<>();
+    private static final Map<UUID, ChatPlayer> playerCache = new HashMap<>();
 
-    public PluginPlayer getPlayer(UUID uuid) {
+    public ChatPlayer getPlayer(UUID uuid) {
         return playerCache.computeIfAbsent(uuid,
-                (key) -> new PluginPlayer(uuid));
+                (key) -> new ChatPlayer(uuid));
     }
 
-    public static Map<UUID, PluginPlayer> getPlayerCache() {
+
+
+
+
+
+
+
+
+
+    //------------------------------------- BOILERPLATE ----------------------------------------///
+    public static Map<UUID, ChatPlayer> getPlayerCache() {
         return Map.copyOf(playerCache);
     }
 

@@ -15,14 +15,12 @@ public class Issuer {
     private final IssuerType type;
 
     public static final Issuer
-            CONSOLE = new Issuer("console", IssuerType.CONSOLE,null);
-
-    /**
-     * The plugin creator is considered a filler port for most fields that require an issuer.
-     */
-    public static final Issuer DEFAULT_ISSUER = new Issuer("OfirTIM", IssuerType.PLAYER, UUID.fromString("b410f5ec-3fe9-4567-a544-1907e93a6f6d"));
+            CONSOLE = new Issuer("console", IssuerType.CONSOLE,null),
+            /**The plugin creator is considered a filler port for most fields that require an issuer.*/
+            DEFAULT_ISSUER = new Issuer("OfirTIM", IssuerType.PLAYER, UUID.fromString("b410f5ec-3fe9-4567-a544-1907e93a6f6d"));
 
 
+    //------------------------------------- BOILERPLATE ----------------------------------------///
     public Issuer(@Nullable String name, IssuerType issuerType, @Nullable UUID uuid) {
         this.uuid = uuid;
         this.name = name;

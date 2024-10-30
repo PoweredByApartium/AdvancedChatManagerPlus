@@ -9,7 +9,7 @@ public final class PaperAppLoader extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
+        new AppProcedureStartup(this);
         getLogger().info("AdvancedChatManagerPlus v" + getPluginMeta().getVersion() + "is now enabled!");
     }
 
