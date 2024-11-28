@@ -17,15 +17,6 @@ public class PlayerManager {
                 (key) -> new ChatPlayer(uuid));
     }
 
-
-
-
-
-
-
-
-
-
     //------------------------------------- BOILERPLATE ----------------------------------------///
     public static Map<UUID, ChatPlayer> getPlayerCache() {
         return Map.copyOf(playerCache);

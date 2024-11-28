@@ -1,3 +1,0 @@
-dependencies {
-    api("com.querydsl:querydsl-sql:5.1.0")
-}
