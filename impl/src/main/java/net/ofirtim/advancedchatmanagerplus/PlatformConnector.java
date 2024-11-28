@@ -5,15 +5,13 @@
  * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
  */
 
-package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
+package net.ofirtim.advancedchatmanagerplus;
 
-public class MessageManager {
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 
-    private static final MessageManager instance = new MessageManager();
+public interface PlatformConnector {
 
+    <T> CompletableFuture<T> supplyAsync(Callable<T> callable);
 
-    //------------------------------------- BOILERPLATE ----------------------------------------///
-    public static MessageManager getInstance() {
-        return instance;
-    }
 }

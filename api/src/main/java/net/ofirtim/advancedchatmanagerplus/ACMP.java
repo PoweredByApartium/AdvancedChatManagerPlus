@@ -5,15 +5,13 @@
  * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
  */
 
-package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
+package net.ofirtim.advancedchatmanagerplus;
 
-public class MessageManager {
+import org.jetbrains.annotations.ApiStatus;
 
-    private static final MessageManager instance = new MessageManager();
+public interface ACMP {
 
+    @ApiStatus.Internal
+    void markForInit(ChatPlayer player);
 
-    //------------------------------------- BOILERPLATE ----------------------------------------///
-    public static MessageManager getInstance() {
-        return instance;
-    }
 }

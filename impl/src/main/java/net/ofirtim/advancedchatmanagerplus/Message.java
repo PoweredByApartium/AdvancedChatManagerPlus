@@ -1,11 +1,16 @@
-package net.ofirtim.advancedchatmanagerplus.apploader.structs;
+/*
+ * Copyright (c) 2024, Lior Slakman (me@voigon.dev), ALL RIGHTS RESERVED
+ * Do not use, copy, modify, and/or distribute this software without explicit permission from the
+ * rights holder. Reselling this product is not allowed. Transfer of the source code to any person
+ * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
+ */
 
-import org.bukkit.ChatColor;
+package net.ofirtim.advancedchatmanagerplus;
 
 public class Message {
 
     public static final Message
-            DEFAULT_MESSAGE = new Message("msg-default",ChatColor.BLUE + "message to load general message model.", MessageSeverity.GENERAL),
+            DEFAULT_MESSAGE = new Message("msg-default","message to load general message model.", MessageSeverity.INFO),
             NO_PERMISSION = new Message("no-permission", "You do not have permission to execute the following action!", MessageSeverity.ERROR);
 
 

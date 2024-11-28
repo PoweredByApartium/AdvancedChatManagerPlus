@@ -1,8 +1,15 @@
-package net.ofirtim.advancedchatmanagerplus.api.models;
+/*
+ * Copyright (c) 2024, Lior Slakman (me@voigon.dev), ALL RIGHTS RESERVED
+ * Do not use, copy, modify, and/or distribute this software without explicit permission from the
+ * rights holder. Reselling this product is not allowed. Transfer of the source code to any person
+ * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
+ */
 
-import net.ofirtim.advancedchatmanagerplus.api.structs.ChatChannel;
-import net.ofirtim.advancedchatmanagerplus.api.structs.ChatPlayer;
-import net.ofirtim.advancedchatmanagerplus.api.structs.Tag;
+package net.ofirtim.advancedchatmanagerplus.models;
+
+import net.ofirtim.advancedchatmanagerplus.ChatChannel;
+import net.ofirtim.advancedchatmanagerplus.ChatPlayer;
+import net.ofirtim.advancedchatmanagerplus.Tag;
 
 import java.util.Optional;
 import java.util.Set;
@@ -45,7 +52,7 @@ public interface PlayerManager {
     void setChatChannel(ChatPlayer player, ChatChannel chatChannel);
 
     /**
-     *
+     * Adds a "tag" to the player's chained tags.
      * @param player
      * @param tag
      */

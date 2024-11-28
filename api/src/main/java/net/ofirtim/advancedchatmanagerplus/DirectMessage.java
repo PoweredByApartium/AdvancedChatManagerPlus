@@ -5,15 +5,9 @@
  * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
  */
 
-package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
+package net.ofirtim.advancedchatmanagerplus;
 
-public class MessageManager {
-
-    private static final MessageManager instance = new MessageManager();
+public class DirectMessage {
 
 
-    //------------------------------------- BOILERPLATE ----------------------------------------///
-    public static MessageManager getInstance() {
-        return instance;
-    }
 }

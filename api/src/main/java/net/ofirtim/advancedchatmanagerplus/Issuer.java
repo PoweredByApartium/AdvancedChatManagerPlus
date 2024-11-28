@@ -1,4 +1,11 @@
-package net.ofirtim.advancedchatmanagerplus.api.structs;
+/*
+ * Copyright (c) 2024, Lior Slakman (me@voigon.dev), ALL RIGHTS RESERVED
+ * Do not use, copy, modify, and/or distribute this software without explicit permission from the
+ * rights holder. Reselling this product is not allowed. Transfer of the source code to any person
+ * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
+ */
+
+package net.ofirtim.advancedchatmanagerplus;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +23,7 @@ public class Issuer {
 
     public static final Issuer
             CONSOLE = new Issuer("console", IssuerType.CONSOLE,null),
-            /**The plugin creator is considered a filler port for most fields that require an issuer.*/
+            /**The plugin creator is considered a filler port for most fields that require a default issuer.*/
             DEFAULT_ISSUER = new Issuer("OfirTIM", IssuerType.PLAYER, UUID.fromString("b410f5ec-3fe9-4567-a544-1907e93a6f6d"));
 
 

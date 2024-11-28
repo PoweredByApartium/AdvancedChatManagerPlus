@@ -5,15 +5,17 @@
  * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
  */
 
-package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
+package net.ofirtim.advancedchatmanagerplus;
 
-public class MessageManager {
+import java.io.File;
+import java.util.Map;
 
-    private static final MessageManager instance = new MessageManager();
+public interface DataConnector {
 
+    TranslationProvider getTranslationProvider();
 
-    //------------------------------------- BOILERPLATE ----------------------------------------///
-    public static MessageManager getInstance() {
-        return instance;
-    }
+    DataProvider getDataProvider();
+
+    void connect(File dataFolder, Map<String, Object> params) throws Exception;
+
 }

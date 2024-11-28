@@ -5,15 +5,13 @@
  * or organization not explicitly approved by the rights holder via a license agreement is hereby forbidden.
  */
 
-package net.ofirtim.advancedchatmanagerplus.apploader.models.managers;
+package net.ofirtim.advancedchatmanagerplus;
 
-public class MessageManager {
+public record Tag(
+        String translationKey,
+        int weight) {
 
-    private static final MessageManager instance = new MessageManager();
-
-
-    //------------------------------------- BOILERPLATE ----------------------------------------///
-    public static MessageManager getInstance() {
-        return instance;
-    }
+    public static final Tag
+            DEFAULT_TAG = new Tag("tag-default", 1),
+            MEMBER_TAG = new Tag("member-tag", 2);
 }
