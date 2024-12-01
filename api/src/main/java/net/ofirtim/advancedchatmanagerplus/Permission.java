@@ -12,8 +12,10 @@ public class Permission {
     /**Declares Default loader option so we know the Permission class is getting loaded from this instance**/
     public static final String DEFAULT_PERMISSION = "acmp.default-loader";
 
-    private static final String
+    public static final String
             PLAYER_GLOBAL_CHAT = ChatChannel.GLOBAL.requiredPermission() + ".allow",
             PLAYER_GLOBAL_COLOR = ChatChannel.GLOBAL.requiredPermission() + ".color",
-            PLAYER_GLOBAL_PLACEHOLDERS = ChatChannel.GLOBAL.requiredPermission() + "";
+            PLAYER_GLOBAL_PLACEHOLDERS = ChatChannel.GLOBAL.requiredPermission() + ".placeholder.",
+
+            COMMAND_RELOAD = "acmp.command.reload";
 }

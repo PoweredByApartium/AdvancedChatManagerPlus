@@ -20,7 +20,7 @@ public class MinecraftAdapter {
     public MinecraftAdapter(PaperAppLoader paperAppLoader) {}
 
     public ChatPlayer from(@NotNull Player player) {
-        return AppManager.getPlayer(player.getUniqueId());
+        return null;/*AppManager.getPlayer(player.getUniqueId());*/
     }
 
     public Optional<Player> to(@NotNull ChatPlayer chatPlayer) {

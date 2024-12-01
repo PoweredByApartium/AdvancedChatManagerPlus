@@ -7,12 +7,7 @@
 
 package net.ofirtim.advancedchatmanagerplus.flatfile;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import net.ofirtim.advancedchatmanagerplus.DataProvider;
-import net.ofirtim.advancedchatmanagerplus.PlatformConnector;
 
 import java.io.File;
 import java.util.UUID;
@@ -20,9 +15,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class FlatFileDataProvider implements DataProvider {
 
-    private final FlatFile parent;
+    private final FlatFileDataConnector parent;
 
-    public FlatFileDataProvider(FlatFile parent) {
+    public FlatFileDataProvider(FlatFileDataConnector parent) {
         this.parent = parent;
     }
 

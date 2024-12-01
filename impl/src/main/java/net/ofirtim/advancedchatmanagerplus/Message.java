@@ -13,15 +13,6 @@ public class Message {
             DEFAULT_MESSAGE = new Message("msg-default","message to load general message model.", MessageSeverity.INFO),
             NO_PERMISSION = new Message("no-permission", "You do not have permission to execute the following action!", MessageSeverity.ERROR);
 
-
-
-
-
-
-
-
-
-
     //------------------------------------- BOILERPLATE ----------------------------------------///
     private final String
             messageKey,

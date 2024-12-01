@@ -1,7 +1,7 @@
 dependencies {
     api("com.querydsl:querydsl-sql:5.1.0")
     api(project(":api"))
-    compileOnlyApi("net.kyori:adventure-api:4.14.0")
+    compileOnlyApi("net.kyori:adventure-api:4.17.0")
     compileOnlyApi("net.kyori:adventure-text-minimessage")
 
     // todo split

@@ -77,12 +77,10 @@ default-locale: "EN_US"
 # Database connection is rather simple to use, ACMP allows the following options for database connectivity:
 # Flat file, MySQL, SQLite, MongoDB.
 #
-# If connection won't be established the plugin will fall-back to the fall-back-db setting, allowing the plugin to continue its session.
 ## !! IMPORTANT DETAIL BELLOW !! ##
 # The database connection can only be established when the plugin starts up, and not beforehand.
-# avoid trying to connect before reloading or restarting the server, it will not work and the plugin will go to fall-back.
+# avoid trying to connect before reloading or restarting the server.
 database:
-  fall-back-db: SQLITE
   database-type: FLATFILE
 
   ## !! Credentials Db Authenticating !! ##
@@ -107,8 +105,20 @@ database:
 # of placeholders, and in the near future we plan to implement PlaceHolderAPI into this amazing chat system.
 # Placeholders are for in-message replacements, meaning it is not related to players prefixes and formats.
 # example: [Owner] OfirTIM: Hello everyone! I have gotten the famous [item]! - this will replace the placeholder with the item in hand.
-placeholders:
-  item-in-hand:
-    allow: true
-    show-air: false
-    placeholder: "[item]"
+chat:
+  placeholders:
+    item-in-hand:
+      allow: true
+      show-air: false
+      placeholder: "[item]"
+
+  protection:
+    allow-links: false
+    avoid-words: ["nigga", "gay", "nigger", "fuck", "shit"]
+    check-obfuscation:
+      numbers: true
+      symbols: true
+      spacers: true
+    flooding:
+      avoid-unless-spaces: false
+      avoid-repeated-words: true

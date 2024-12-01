@@ -15,7 +15,7 @@ public class ChatPlayer {
 
     private final UUID uniqueId;
     private ChatChannel chatChannel;
-    private List<Tag> prefixes;
+    private List<Tag> tags;
     private Locale locale;
 
     //Constructor
@@ -33,7 +33,7 @@ public class ChatPlayer {
     }
 
     /* package-private */ void setPrefixes(List<Tag> prefixes) {
-        this.prefixes = prefixes;
+        this.tags = prefixes;
     }
 
     /* package-private */ void setChatChannel(ChatChannel channel) {

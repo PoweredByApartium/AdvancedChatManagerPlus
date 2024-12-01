@@ -9,9 +9,10 @@ package net.ofirtim.advancedchatmanagerplus;
 
 public record Tag(
         String translationKey,
-        int weight) {
+        int weight,
+        String miniMessage) {
 
     public static final Tag
-            DEFAULT_TAG = new Tag("tag-default", 1),
-            MEMBER_TAG = new Tag("member-tag", 2);
+            GUEST_TAG = new Tag("guest", 1, "<gray>Guest</gray>"),
+            MEMBER_TAG = new Tag("member", 2, "<gray>Member</gray>");
 }

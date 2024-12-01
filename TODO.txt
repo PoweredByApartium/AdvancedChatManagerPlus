@@ -1,0 +1,31 @@
+ACMP ideal functionality:
+
+ChatFilter:
+- Allows filtering "bad words".
+- Allows filtering advertisements like links, IP addresses and such.
+- Allows key-word blocking to avoid things like player/admin doxing.
+- All this system should be ran through Config.yml
+
+ChatChannels:
+- Allows permanent channels that are both saved in memory & configuration file.
+- Allows ephemeral channels like party channels and such for temporary purposes.
+- Allows admin penetration for dynamical and security purposes.
+- permanent chat channels are saved on Config.yml.
+
+ChatControl:
+- Allows message manipulation of players.
+- Allows the concept of "Uwuifying" players messages and such.
+- Allows mass message deletion to replace clear-chat concept.
+- Allows specific player clear chat, mass clear chat & "clear my chat"
+
+Chat Messages:
+- Allows usage of placeholders, for example: PlayerName: [item] -> will show the player's item in hand. This feature also needs PAPI support for future updates.
+- Allows Chat Clickable & Hoverable messages, for example: if I click on players name of his message, it will prompt in my chat "/msg [playername] ".
+- Can add infinite amount of Prefixes, Suffixes and for players.
+- IN THE FUTURE -> Add support for message translation.
+  if in the near future we can make the plugin connectable to an AI model, we can make sure people can get their messages translated to understand languages they don't know.
+
+
+Architecture:
+- 1 Main API module that basically takes control of all data control.
+  The best example is that each DB module will be having the data interface classes extended in them, and do their own functionality.

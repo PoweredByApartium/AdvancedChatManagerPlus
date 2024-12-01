@@ -7,7 +7,9 @@
 
 package net.ofirtim.advancedchatmanagerplus;
 
-public class DirectMessage {
+import java.util.UUID;
 
-
-}
+public record DirectMessage(
+        UUID sender,
+        UUID recipient,
+        String message) {}

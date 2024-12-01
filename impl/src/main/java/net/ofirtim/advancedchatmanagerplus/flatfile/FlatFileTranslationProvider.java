@@ -22,13 +22,13 @@ import java.util.Optional;
 
 public class FlatFileTranslationProvider implements TranslationProvider {
 
-    private final FlatFile parent;
+    private final FlatFileDataConnector parent;
 
     Map<String, Map<String, Component>> translations;
 
     MiniMessage miniMessage = MiniMessage.miniMessage();
 
-    public FlatFileTranslationProvider(FlatFile parent) throws Exception {
+    public FlatFileTranslationProvider(FlatFileDataConnector parent) throws Exception {
         this.parent = parent;
         load();
     }

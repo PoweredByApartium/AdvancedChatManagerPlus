@@ -14,6 +14,7 @@ import net.ofirtim.advancedchatmanagerplus.Tag;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Class used to control and update player's information related to ACMP.
@@ -53,15 +54,21 @@ public interface PlayerManager {
 
     /**
      * Adds a "tag" to the player's chained tags.
-     * @param player
-     * @param tag
+     * @param player The ChatPlayer reference object.
+     * @param tag The tag you are looking to add.
      */
     void addTag(ChatPlayer player, Tag tag);
 
     /**
-     *
-     * @param player
-     * @param tag
+     * Removes a "tag" from the player's chained tags.
+     * This method avoids thread blocking by using completable futures.
+     * This method will return a boolean if the tag was removed or not.
+     * Usually if the boolean returns false it means it couldn't remove the tag, because it had something
+     * to do with a permission that is related to the tag, or this tag is a default tag for the player.
+     * if the boolean returns null, it means the player never had this tag.
+     * @param player The ChatPlayer reference object.
+     * @param tag The tag you are looking to remove.
+     * @return a {@link CompletableFuture} of a Boolean for asynchronous means.
      */
-    void removeTag(ChatPlayer player, Tag tag);
+    CompletableFuture<Boolean> removeTag(ChatPlayer player, Tag tag);
 }

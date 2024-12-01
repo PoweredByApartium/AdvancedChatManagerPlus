@@ -19,7 +19,7 @@ import net.ofirtim.advancedchatmanagerplus.TranslationProvider;
 import java.io.File;
 import java.util.Map;
 
-public class FlatFile implements DataConnector {
+public class FlatFileDataConnector implements DataConnector {
 
     /* package-private */ final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new ParameterNamesModule())
@@ -36,7 +36,7 @@ public class FlatFile implements DataConnector {
 
     private boolean connected;
 
-    public FlatFile(File dataFolder, PlatformConnector platformConnector) {
+    public FlatFileDataConnector(File dataFolder, PlatformConnector platformConnector) {
         this.platformConnector = platformConnector;
         this.dataFolder = dataFolder;
     }
