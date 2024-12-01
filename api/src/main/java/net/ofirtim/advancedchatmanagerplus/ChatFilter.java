@@ -51,8 +51,14 @@ public interface ChatFilter {
         NUMBER_OBFUSCATION,
         SYMBOL_OBFUSCATION,
         SPACER_OBFUSCATION,
+        REPEATED_CHARS,
         SWEARING,
+        SPAMMING
     }
 
-    record Response(boolean allowed, EnumMap<ChatFilter.ChatViolation, Integer> violations) {}
+    enum ActionResult {
+        IMMEDIATE_ACTION,
+        DENY,
+        ALLOW
+    }
 }

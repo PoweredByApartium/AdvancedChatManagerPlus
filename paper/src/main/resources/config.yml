@@ -105,14 +105,9 @@ database:
 # of placeholders, and in the near future we plan to implement PlaceHolderAPI into this amazing chat system.
 # Placeholders are for in-message replacements, meaning it is not related to players prefixes and formats.
 # example: [Owner] OfirTIM: Hello everyone! I have gotten the famous [item]! - this will replace the placeholder with the item in hand.
-chat:
-  placeholders:
-    item-in-hand:
-      allow: true
-      show-air: false
-      placeholder: "[item]"
 
-  protection:
+filters:
+  main-filter:
     allow-links: false
     avoid-words: ["nigga", "gay", "nigger", "fuck", "shit"]
     check-obfuscation:
@@ -120,12 +115,17 @@ chat:
       symbols: true
       spacers: true
     flooding:
-      avoid-unless-spaces: false
-      avoid-repeated-words: true
+      deny-repeated-symbols: true
+      deny-repeated-words: true
     violation-counter:
       enabled: true
       max-violations-per-message: 2
-      immediate-punish-violations:
-        - LINK
-        - SWEARING
-      immediate-punish-violation-command: '/ban [player] You have tempered with the chat!'
+      immediate-action-violations:
+        - LINK: '/ban [player] You have tempered with the chat!'
+        - SWEARING: '/warn [player] Do not swear!'
+
+
+channels:
+  global:
+    filters: [main-filter]
+    placeholders: [item]

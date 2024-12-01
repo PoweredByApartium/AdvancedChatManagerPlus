@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class SwearingChatFilter implements ChatFilter {
 
+    //TODO when config initiates make sure to pull all words from there.
     public List<String> getBlockedWordsFromConfig() {
         return List.of("");
     }
@@ -18,7 +19,7 @@ public class SwearingChatFilter implements ChatFilter {
 
     @Override
     public String deobfuscate(String possiblyObfuscated) {
-        return "";
+        return possiblyObfuscated;
     }
 
     @Override

@@ -8,7 +8,6 @@
 package net.ofirtim.advancedchatmanagerplus.apploader.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.ofirtim.advancedchatmanagerplus.filtration.ChatFilter;
 import net.ofirtim.advancedchatmanagerplus.apploader.PaperAppLoader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
