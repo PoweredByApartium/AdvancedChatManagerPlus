@@ -16,6 +16,8 @@ public interface DataProvider {
 
     CompletableFuture<PlayerJoinDataResponse> getDataOnJoin(UUID player);
 
+    ACMPConfiguration loadConfiguration();
+
     record PlayerJoinDataResponse(
             ChatChannel channel,
             List<Tag> prefixes,

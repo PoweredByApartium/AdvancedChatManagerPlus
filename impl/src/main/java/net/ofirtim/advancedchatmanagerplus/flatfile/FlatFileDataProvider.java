@@ -7,6 +7,7 @@
 
 package net.ofirtim.advancedchatmanagerplus.flatfile;
 
+import net.ofirtim.advancedchatmanagerplus.ACMPConfiguration;
 import net.ofirtim.advancedchatmanagerplus.DataProvider;
 
 import java.io.File;
@@ -20,6 +21,16 @@ public class FlatFileDataProvider implements DataProvider {
 
     public FlatFileDataProvider(FlatFileDataConnector parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public ACMPConfiguration loadConfiguration() {
+        File file = new File(parent.dataFolder, "config.json");
+        try {
+            return parent.objectMapper.readValue(file, ACMPConfiguration.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
