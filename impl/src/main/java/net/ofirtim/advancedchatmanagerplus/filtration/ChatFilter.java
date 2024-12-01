@@ -1,4 +1,4 @@
-package net.ofirtim.advancedchatmanagerplus;
+package net.ofirtim.advancedchatmanagerplus.filtration;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -6,8 +6,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
+@Deprecated(since = "https://discord.com/channels/@me/423924558404517908/1312735633453744199")
 public class ChatFilter {
+
+    private static final Pattern LINK_PATTERN = Pattern.compile("((https?://)?(www\\.)?[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,}(/[a-zA-Z0-9\\-_.]*)?|\\b\\d{1,3}(\\.\\d{1,3}){3}\\b)");
+
 
     private final boolean allowLinks;
     private final Set<ObfuscationCheckers> checkers;
@@ -23,13 +28,44 @@ public class ChatFilter {
         this.blacklistedWords = blacklistedWords;
     }
 
-    public boolean check(Component component) {
+    public Set<ChatViolations> getViolations(Component component) {
         MiniMessage miniMessage = MiniMessage.miniMessage();
-        String asString = miniMessage.stripTags(miniMessage.serialize(component));
+        String asString = miniMessage.stripTags(miniMessage.serialize(component)).toLowerCase();
+        Set<net.ofirtim.advancedchatmanagerplus.ChatFilter.ChatViolation> violations = new HashSet<>();
 
-        //Checks links FIRST, MOST IMPORTANTLY!
+        //Localized block for links
+        if (!allowLinks) {
+            String linkDeob = deobfuscatePossibleLinks(asString);
+            if (LINK_PATTERN.matcher(linkDeob).find());
+        }
 
-        return false;
+        //Was never finished, moved to inheritance.
+        for (String badWord : blacklistedWords) {
+            String collector = badWord;
+            if (checkers.contains(ObfuscationCheckers.NUMBERS)) {
+                String deobfuscated = deobfuscateCommonNumbersToLetters(collector);
+
+                if (deobfuscated.contains(badWord));
+                collector = deobfuscated;
+            }
+
+            if (checkers.contains(ObfuscationCheckers.SYMBOLS)) {
+                String deobfuscated = deobfuscateCommonSymbolsToLetters(collector);
+
+                if (deobfuscated.contains(badWord));
+                collector = deobfuscated;
+            }
+
+            if (checkers.contains(ObfuscationCheckers.SPACERS)) {
+                String deobfuscated = deobfuscateSpacesAndTabsToWholeWord(collector);
+
+                if (deobfuscated.contains(badWord));
+                collector = deobfuscated;
+            }
+
+        }
+
+        return violations;
     }
 
     public boolean checkFull(Component component) {
@@ -95,8 +131,16 @@ public class ChatFilter {
         return asString;
     }
 
-    enum ObfuscationCheckers {
+    public enum ObfuscationCheckers {
         NUMBERS, SYMBOLS, SPACERS
+    }
+
+    public enum ChatViolations {
+        LINK,
+        NUMBER_OBFUSCATION,
+        SYMBOL_OBFUSCATION,
+        SPACER_OBFUSCATION,
+        SWEARING,
     }
 
     public static class FilterBuilder {

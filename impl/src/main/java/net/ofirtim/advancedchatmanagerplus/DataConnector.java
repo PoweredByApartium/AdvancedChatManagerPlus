@@ -18,4 +18,5 @@ public interface DataConnector {
 
     void connect(File dataFolder, Map<String, Object> params) throws Exception;
 
+
 }

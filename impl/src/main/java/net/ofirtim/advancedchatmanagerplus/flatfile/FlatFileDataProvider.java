@@ -10,6 +10,7 @@ package net.ofirtim.advancedchatmanagerplus.flatfile;
 import net.ofirtim.advancedchatmanagerplus.DataProvider;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 

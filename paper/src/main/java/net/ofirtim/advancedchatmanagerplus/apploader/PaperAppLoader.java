@@ -33,7 +33,6 @@ public class PaperAppLoader extends JavaPlugin {
         }
 
         acmp.setDataConnector(file);
-
         this.minecraftAdapterInstance = new MinecraftAdapter(this);
         new AppProcedureStartup(this);
         getLogger().info("AdvancedChatManagerPlus v" + getDescription().getVersion() + " is now enabled!");

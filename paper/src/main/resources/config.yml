@@ -122,3 +122,10 @@ chat:
     flooding:
       avoid-unless-spaces: false
       avoid-repeated-words: true
+    violation-counter:
+      enabled: true
+      max-violations-per-message: 2
+      immediate-punish-violations:
+        - LINK
+        - SWEARING
+      immediate-punish-violation-command: '/ban [player] You have tempered with the chat!'
