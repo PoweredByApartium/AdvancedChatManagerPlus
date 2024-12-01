@@ -7,25 +7,40 @@
 
 package net.ofirtim.advancedchatmanagerplus.apploader;
 
+import net.ofirtim.advancedchatmanagerplus.ACMPimpl;
 import net.ofirtim.advancedchatmanagerplus.apploader.models.MinecraftAdapter;
-import net.ofirtim.advancedchatmanagerplus.apploader.models.managers.PlayerManager;
+import net.ofirtim.advancedchatmanagerplus.flatfile.FlatFileDataConnector;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class PaperAppLoader extends JavaPlugin {
+import java.util.Map;
+
+public class PaperAppLoader extends JavaPlugin {
 
     private static PaperAppLoader instance;
-    private static AppManager appManager;
     MinecraftAdapter minecraftAdapterInstance;
-    PlayerManager playerManagerInstance;
+    ACMPimpl acmp;
 
     @Override
     public void onEnable() {
         instance = this;
-        appManager = new AppManager(this);
+        acmp = new ACMPimpl();
+        SpigotPlatformConnector platformConnector = new SpigotPlatformConnector();
+        FlatFileDataConnector file = new FlatFileDataConnector(getDataFolder(), platformConnector);
+        try {
+            file.connect(getDataFolder(), Map.of());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        acmp.setDataConnector(file);
+
         this.minecraftAdapterInstance = new MinecraftAdapter(this);
-        this.playerManagerInstance = new PlayerManager();
         new AppProcedureStartup(this);
-        getLogger().info("AdvancedChatManagerPlus v" + getDescription().getVersion() + "is now enabled!");
+        getLogger().info("AdvancedChatManagerPlus v" + getDescription().getVersion() + " is now enabled!");
+    }
+
+    public ACMPimpl getAcmp() {
+        return acmp;
     }
 
     @Override

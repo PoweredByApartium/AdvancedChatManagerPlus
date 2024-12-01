@@ -7,7 +7,11 @@
 
 package net.ofirtim.advancedchatmanagerplus;
 
+import net.ofirtim.advancedchatmanagerplus.state.PlayerManager;
+
 public class ACMPimpl implements ACMP {
+
+    private final PlayerManager playerManager = new PlayerManager();
 
     DataProvider dataProvider;
 
@@ -21,7 +25,17 @@ public class ACMPimpl implements ACMP {
                      player.setPrefixes(data.prefixes());
                      player.setLocale(data.locale());
                      player.markReady();
+                     playerManager.insertPlayer(player);
                  });
+    }
+
+    public void setDataConnector(DataConnector dataConnector) {
+        this.dataProvider = dataConnector.getDataProvider();
+        this.translationProvider = dataConnector.getTranslationProvider();
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     public TranslationProvider getTranslationProvider() {

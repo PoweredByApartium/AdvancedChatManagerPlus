@@ -8,13 +8,23 @@
 package net.ofirtim.advancedchatmanagerplus.apploader.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.ofirtim.advancedchatmanagerplus.ChatFilter;
+import net.ofirtim.advancedchatmanagerplus.apploader.PaperAppLoader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 public class PlayerChatListener implements Listener {
 
+    private final PaperAppLoader paperAppLoader;
+
+    public PlayerChatListener(PaperAppLoader paperAppLoader) {
+        this.paperAppLoader = paperAppLoader;
+    }
+
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
+        ChatFilter cf = new ChatFilter();
+        if (!cf.allow())
     }
 }

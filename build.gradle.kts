@@ -74,6 +74,10 @@ subprojects {
         }
     }
 
+    tasks.test {
+        useJUnitPlatform()
+    }
+
     tasks.getByName("jar") {
 
 

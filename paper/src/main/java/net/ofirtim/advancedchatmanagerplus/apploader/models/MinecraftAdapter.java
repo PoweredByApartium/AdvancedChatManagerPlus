@@ -8,7 +8,6 @@
 package net.ofirtim.advancedchatmanagerplus.apploader.models;
 
 import net.ofirtim.advancedchatmanagerplus.ChatPlayer;
-import net.ofirtim.advancedchatmanagerplus.apploader.AppManager;
 import net.ofirtim.advancedchatmanagerplus.apploader.PaperAppLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
