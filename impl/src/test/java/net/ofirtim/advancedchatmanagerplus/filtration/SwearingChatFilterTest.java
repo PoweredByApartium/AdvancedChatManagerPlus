@@ -34,24 +34,27 @@ class SwearingChatFilterTest {
     }
 
     @Test
-    void testWithNumberDeobfuscation() {
-        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(new NumberObfuscationChatFilter().deobfuscate(input));
+    void testNumberObfuscationsWithSwearing() {
+        String deobfuscate = new NumberObfuscationChatFilter().deobfuscate(input);
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(deobfuscate);
         assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
 
         assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
-    }
-
-/*    @Test
-    void testWithSymbolObfuscation() {
-        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(new NumberObfuscationChatFilter().deobfuscate(input));
-        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
-
-        assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
-
+        assertEquals("you fucking no%b, sex is good!!!", deobfuscate);
     }
 
     @Test
-    void testWithBothObfuscation() {
+    void testSymbolObfuscationsWithSwearing() {
+        String deobfuscate = new SymbolObfuscationChatFilter().deobfuscate(input);
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(deobfuscate);
+        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
+
+        assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
+        assertEquals("you fucking noob, s3x is good!!!", deobfuscate);
+    }
+
+    @Test
+    void countBothObfuscationsWithSwearing() {
         input = new NumberObfuscationChatFilter().deobfuscate(input);
         input = new SymbolObfuscationChatFilter().deobfuscate(input);
 
@@ -59,6 +62,6 @@ class SwearingChatFilterTest {
         assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
 
         assertEquals(3, violations.get(ChatFilter.ChatViolation.SWEARING));
-
-    }*/
+        assertEquals("you fucking noob, sex is good!!!", input);
+    }
 }
