@@ -30,18 +30,13 @@ public interface ChatFilter {
      * @return An Immutable {@link Map}, with {@link ChatViolation} as the key, and {@link Integer} as the amount of violations of the specific key ChatViolation.
      */
     default EnumMap<ChatViolation, Integer> getViolations(String message) {
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        logger.info("Starting violation check for message: " + message);
-
         EnumMap<ChatViolation, Integer> violations = new EnumMap<>(Map.of(getRelatedChatViolation(), 0));
 
         Matcher matcher = getFilterPattern().matcher(message);
         while (matcher.find()) {
             violations.put(getRelatedChatViolation(), violations.get(getRelatedChatViolation()) + 1);
-            logger.warning("Violation detected! Current count for " + getRelatedChatViolation() + ": " + violations.get(getRelatedChatViolation()));
         }
 
-        logger.info("Completed violation check. Final violations: " + violations + "\n");
         return violations;
     }
 

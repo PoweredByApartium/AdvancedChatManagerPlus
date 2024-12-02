@@ -35,7 +35,7 @@ public class ChatManager {
             //Return all possible Violations for this filter
             EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(serialized);
             totalViolations.putAll(violations);
-            System.out.println("collected violations from " + filter.getRelatedChatViolation().name() + ": " + violations);
+            System.out.println("collected violations from " + filter.getRelatedChatViolation().name().replace("_OBFUSCATION", "").toLowerCase() + ": " + violations.get(filter.getRelatedChatViolation()));
             //an iteration for loop for all violations as entrys
             for (Map.Entry<ChatFilter.ChatViolation, Integer> entry : violations.entrySet()) {
                 if (immediateActionViolations.contains(entry.getKey())) {

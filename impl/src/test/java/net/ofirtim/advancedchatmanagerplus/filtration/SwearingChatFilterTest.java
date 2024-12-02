@@ -20,7 +20,7 @@ class SwearingChatFilterTest implements ChatFilterTest {
 
     @Override
     public String getInput() {
-        return "you fucking no%b, s3x is good!!!";
+        return "you fucking no%b, s3x is good!!! 554411 5*5";
     }
 
     @Override
@@ -56,7 +56,7 @@ class SwearingChatFilterTest implements ChatFilterTest {
         assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
 
         assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
-        assertEquals("you fucking no%b, sex is good!!!", deobfuscate);
+        assertEquals("you fucking no%b, sex is good!!! 554411 5*5", deobfuscate);
     }
 
     @Test
@@ -66,17 +66,20 @@ class SwearingChatFilterTest implements ChatFilterTest {
         assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
 
         assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
-        assertEquals("you fucking noob, s3x is good!!!", deobfuscate);
+        assertEquals("you fucking noob, s3x is good!!! 554411 5*5", deobfuscate);
     }
 
     @Test
     void testFilterViolationCounterWithNumberAndSymbolDeobfuscation() {
+        System.out.println(getChatManager().SYMBOL_FILTER.getViolations(getInput()));
+        System.out.println(getChatManager().NUMBER_FILTER.getViolations(getInput()));
+
         String deobfuscated = getChatManager().SYMBOL_FILTER.deobfuscate(getChatManager().NUMBER_FILTER.deobfuscate(getInput()));
 
         Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(deobfuscated);
         assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
 
         assertEquals(3, violations.get(ChatFilter.ChatViolation.SWEARING));
-        assertEquals("you fucking noob, sex is good!!!", deobfuscated);
+        assertEquals("you fucking noob, sex is good!!! 554411 5*5", deobfuscated);
     }
 }

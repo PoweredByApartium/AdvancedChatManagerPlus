@@ -2,6 +2,7 @@ package net.ofirtim.advancedchatmanagerplus.filtration;
 
 import net.ofirtim.advancedchatmanagerplus.ChatFilter;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -14,12 +15,47 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
                 .map(String::valueOf)
                 .reduce("", (a, b) -> a + b);
 
-        String regex =
-                "(?<!\\d)" +
-                        "[" + Pattern.quote(symbolKeys) + "]" +
-                        "(?!\\d|[+\\-*/^=])";
+        String regex = "(?!(\\b[()\\d\\s]*\\b|\\d+[+\\-*/^=]\\d+))" +
+                "\\b(?:[a-zA-Z]*[" + Pattern.quote(symbolKeys) + "][a-zA-Z]*)+\\b";
 
         return Pattern.compile(regex);
+    }
+
+    @Override
+    public EnumMap<ChatViolation, Integer> getViolations(String message) {
+        // Initialize the violations map with the related chat violation
+        EnumMap<ChatViolation, Integer> violations = new EnumMap<>(Map.of(getRelatedChatViolation(), 0));
+
+        // Split the message into words
+        String[] words = message.split("\\s+");
+
+        for (String word : words) {
+            // Skip valid math expressions and numeric groups
+            if (isMathExpression(word) || isNumericGroup(word)) {
+                continue;
+            }
+
+            // Deobfuscate the word
+            String deobfuscated = deobfuscate(word);
+
+            // Compare each character in the word to its deobfuscated version
+            int wordViolations = 0;
+            for (int i = 0; i < word.length(); i++) {
+                char originalChar = word.charAt(i);
+                char deobfuscatedChar = i < deobfuscated.length() ? deobfuscated.charAt(i) : originalChar;
+
+                // Count a violation if the character differs
+                if (originalChar != deobfuscatedChar) {
+                    System.out.println("caught: " + word);
+                    wordViolations++;
+                }
+            }
+
+            // Add the violations for this word to the total count
+            violations.put(getRelatedChatViolation(), violations.get(getRelatedChatViolation()) + wordViolations);
+        }
+
+        return violations;
     }
 
 

@@ -11,16 +11,16 @@ class NumberObfuscationChatFilterTest implements ChatFilterTest {
 
     @Override
     public String getInput() {
-        return "Hell0 m47e how are you";
+        return "Hell0 m47e h0w are you 445511 5+5+5";
     }
 
     @Override
     public String getExpectedOutput() {
-        return "Hello mate how are you";
+        return "Hello mate how are you 445511 5+5+5";
     }
 
     @Override
     public int getExpectedViolations() {
-        return 3;
+        return 4;
     }
 }
