@@ -62,18 +62,47 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
         String[] words = possiblyObfuscated.split(" ");
 
         for (String word : words) {
+            // Skip processing if the segment contains no letters
+            if (!containsLetters(word)) {
+                result.append(word).append(" ");
+                continue;
+            }
+
+            // Skip processing if brackets exist at the start and/or end of the segment
+            if (hasOuterBrackets(word)) {
+                result.append(word).append(" ");
+                continue;
+            }
+
+            // Skip processing if it's a math expression
             if (isMathExpression(word)) {
                 result.append(word).append(" ");
-            } else {
-                String cleanedWord = replaceSymbolsInWord(word);
-                result.append(cleanedWord).append(" ");
+                continue;
             }
+
+            // Process and deobfuscate the word
+            String cleanedWord = replaceSymbolsInWord(word);
+            result.append(cleanedWord).append(" ");
         }
 
         return result.toString().trim();
     }
 
-    private String replaceSymbolsInWord(String word) {
+    public boolean hasOuterBrackets(String segment) {
+        // Check for brackets at the start or end
+        boolean startsWithBracket = segment.matches("^[({\\[<].*");
+        boolean endsWithBracket = segment.matches(".*[)}>\\]]$");
+
+        // If either condition is true, return true
+        return startsWithBracket || endsWithBracket;
+    }
+
+    public boolean containsLetters(String segment) {
+        // Returns true if the segment contains at least one alphabetic character
+        return segment.matches(".*[a-zA-Z]+.*");
+    }
+
+    public String replaceSymbolsInWord(String word) {
         Map<Character, String> replacements = getCharacterStringMap();
         String coreWord = word.replaceAll("[!?.]+$", "");
         String punctuation = word.substring(coreWord.length());
@@ -102,15 +131,15 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
         }
     }
 
-    private boolean isNumericGroup(String word) {
+    public boolean isNumericGroup(String word) {
         return word.matches("[()\\d\\s]*");
     }
 
-    private boolean isValidWord(String word) {
+    public boolean isValidWord(String word) {
         return word.matches(".*[a-zA-Z0-9].*");
     }
 
-    private boolean isMathExpression(String word) {
+    public boolean isMathExpression(String word) {
         return word.matches("\\d+[+\\-*/^=]\\d+.*");
     }
 

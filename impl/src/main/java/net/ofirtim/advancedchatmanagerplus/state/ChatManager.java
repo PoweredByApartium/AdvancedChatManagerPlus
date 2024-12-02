@@ -9,14 +9,13 @@ import net.ofirtim.advancedchatmanagerplus.Response;
 import net.ofirtim.advancedchatmanagerplus.filtration.*;
 
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class ChatManager {
 
     SetMultimap<String, ChatFilter> activeFilters = MultimapBuilder.hashKeys().hashSetValues().build(); /*TODO add configuration puller in the near future.*/
-    private Set<ChatFilter.ChatViolation> immediateActionViolations = new HashSet<>();
+    private Set<ChatFilter.ChatViolation> immediateActionViolations = Set.of(ChatFilter.ChatViolation.SWEARING, ChatFilter.ChatViolation.ADDRESS);
     private int maxViolationsPerMessage = 7; //TODO add configuration puller in the near future
 
     public final ChatFilter
@@ -35,12 +34,11 @@ public class ChatManager {
             //Return all possible Violations for this filter
             EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(serialized);
             totalViolations.putAll(violations);
-            System.out.println("collected violations from " + filter.getRelatedChatViolation().name().replace("_OBFUSCATION", "").toLowerCase() + ": " + violations.get(filter.getRelatedChatViolation()));
+            serialized = filter.deobfuscate(serialized);
             //an iteration for loop for all violations as entrys
             for (Map.Entry<ChatFilter.ChatViolation, Integer> entry : violations.entrySet()) {
-                if (immediateActionViolations.contains(entry.getKey())) {
-                    System.out.println("Immediate Violation found!");
-                    return new Response(ChatFilter.ActionResult.IMMEDIATE_ACTION, null);
+                if (immediateActionViolations.contains(entry.getKey()) && entry.getValue() > 0) {
+                    return new Response(ChatFilter.ActionResult.IMMEDIATE_ACTION, violations);
                 }
             }
         }

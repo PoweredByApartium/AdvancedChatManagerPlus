@@ -26,7 +26,6 @@ public interface ChatFilterTest {
     default void testDeobfuscationProcess() {
         String input = getInput();
         input = getFilter().deobfuscate(input);
-        System.out.println(input);
         assertEquals(getExpectedOutput(), input);
 
     }
