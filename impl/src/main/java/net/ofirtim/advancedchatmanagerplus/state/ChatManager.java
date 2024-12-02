@@ -23,7 +23,8 @@ public class ChatManager {
             SYMBOL_FILTER = new SymbolObfuscationChatFilter(),
             NUMBER_FILTER = new NumberObfuscationChatFilter(),
             SWEAR_FILTER = new SwearingChatFilter(),
-            LINK_FILTER = new LinkChatFilter();
+            ADDRESS_FILTER = new AddressObfuscationChatFilter(),
+            FLOODING_FILTER = new FloodingChatFilter();
 
     public Response checkMessage(String channel, Component component) {
         EnumMap<ChatFilter.ChatViolation, Integer> totalViolations = new EnumMap<>(ChatFilter.ChatViolation.class);

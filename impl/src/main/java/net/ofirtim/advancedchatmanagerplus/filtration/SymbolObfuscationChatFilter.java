@@ -8,12 +8,22 @@ import java.util.regex.Pattern;
 
 public class SymbolObfuscationChatFilter implements ChatFilter {
 
-    private static final Pattern SYMBOL_PATTERN = Pattern.compile("[!@#$%^&*()_+\\[\\]{}|~]");
-
     @Override
     public Pattern getFilterPattern() {
-        return SYMBOL_PATTERN;
+        // Dynamically generate regex for symbols from the obfuscation map
+        String symbolKeys = getCharacterStringMap().keySet().stream()
+                .map(String::valueOf)
+                .reduce("", (a, b) -> a + b);
+
+        // Build the regex for matching obfuscated words or symbols
+        String regex =
+                "(?<!\\d)" + // Ensure symbols aren't part of numeric groups
+                        "[" + Pattern.quote(symbolKeys) + "]" + // Match only obfuscation symbols
+                        "(?!\\d|[+\\-*/^=])"; // Ensure symbols aren't part of math expressions
+
+        return Pattern.compile(regex);
     }
+
 
     @Override
     public ChatViolation getRelatedChatViolation() {

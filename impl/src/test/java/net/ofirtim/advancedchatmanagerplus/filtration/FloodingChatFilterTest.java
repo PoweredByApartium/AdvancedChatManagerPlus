@@ -2,21 +2,22 @@ package net.ofirtim.advancedchatmanagerplus.filtration;
 
 import net.ofirtim.advancedchatmanagerplus.ChatFilter;
 
-class NumberObfuscationChatFilterTest implements ChatFilterTest {
+class FloodingChatFilterTest implements ChatFilterTest {
+
 
     @Override
     public ChatFilter getFilter() {
-        return getChatManager().NUMBER_FILTER;
+        return getChatManager().FLOODING_FILTER;
     }
 
     @Override
     public String getInput() {
-        return "Hell0 m47e how are you";
+        return "Helloooooooo Worldddddddd Howwww are youuuuuuuuu";
     }
 
     @Override
     public String getExpectedOutput() {
-        return "Hello mate how are you";
+        return "Helloooooooo Worldddddddd Howwww are youuuuuuuuu";
     }
 
     @Override
