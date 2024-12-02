@@ -44,7 +44,6 @@ class SwearingChatFilterTest implements ChatFilterTest {
     @Override
     public void testFilterViolationCounter() {
         Map<ChatFilter.ChatViolation, Integer> violations = getFilter().getViolations(getInput());
-        System.out.println(violations);
         assertTrue(violations.containsKey(getFilter().getRelatedChatViolation()));
 
         assertEquals(getExpectedViolations(), violations.get(getFilter().getRelatedChatViolation()));
