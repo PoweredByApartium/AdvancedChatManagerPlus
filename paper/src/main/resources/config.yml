@@ -127,5 +127,10 @@ filters:
 
 channels:
   global:
+    permission: 'acmp.chat-channels.minecraft'
     filters: [main-filter]
+    placeholders: [item]
+  staff-chat:
+    permission: 'acmp.chat-channels.staff'
+    filters: []
     placeholders: [item]

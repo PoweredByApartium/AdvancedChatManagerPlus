@@ -11,6 +11,7 @@ import net.ofirtim.advancedchatmanagerplus.ChatChannel;
 import net.ofirtim.advancedchatmanagerplus.ChatPlayer;
 import net.ofirtim.advancedchatmanagerplus.Tag;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public interface PlayerManager {
      * Gets the {@link ChatPlayer}, object with the information filled as an optional.
      * This is the equivalent to Bukkit's player object to this plugin's information.
      * this command is identical to {@link PlayerManager#getPlayer(UUID)}, but allows getting a ChatPlayer object from its username and not unique id.
-     * @param playerName the player's name.
+     * @param playerName the player's id.
      * @return an {@link Optional} of {@link ChatPlayer}, if the ChatPlayer was found in database, the optional will not be empty (null).
      */
     Optional<ChatPlayer> getPlayerFromName(String playerName);
@@ -44,6 +45,12 @@ public interface PlayerManager {
      * @return a set of online players, equivalent to bukkit's getOnlinePlayers only with ACMP's data.
      */
     Set<ChatPlayer> getOnlinePlayers();
+
+    /**
+     * Players can choose their own game language as long as there server support translation to that language.
+     * @return The Locale object of the player's language.
+     */
+    Locale getLocale();
 
     /**
      * Sets the player's chat channel in permanent context, until changed otherwise.

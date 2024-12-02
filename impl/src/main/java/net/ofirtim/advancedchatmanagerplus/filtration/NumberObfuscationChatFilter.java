@@ -8,7 +8,7 @@ public class NumberObfuscationChatFilter implements ChatFilter {
 
     @Override
     public Pattern getFilterPattern() {
-        return Pattern.compile("(?i)\\b(?=.*[a-z])(?=.*\\d)[a-z\\d]+\\b");
+        return Pattern.compile("[0-9]");
     }
 
     @Override

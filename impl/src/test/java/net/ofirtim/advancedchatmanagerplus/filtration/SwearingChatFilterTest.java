@@ -1,6 +1,64 @@
 package net.ofirtim.advancedchatmanagerplus.filtration;
 
-public class SwearingChatFilterTest {
 
+import net.ofirtim.advancedchatmanagerplus.ChatFilter;
+import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+class SwearingChatFilterTest {
+
+    SwearingChatFilter filter = new SwearingChatFilter();
+    List<String> badWords = List.of("noob", "sex", "fuck");
+    String input = "you fucking no%b, s3x is good!!!";
+
+    {
+        filter.getBlockedWordsFromConfig().addAll(badWords);
+    }
+
+    @Test
+    void containsBadWords() {
+        assertTrue(filter.getBlockedWordsFromConfig().containsAll(badWords));
+    }
+
+    @Test
+    void testPatternRecognizing() {
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
+
+        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
+
+        assertEquals(1, violations.get(ChatFilter.ChatViolation.SWEARING));
+    }
+
+    @Test
+    void testWithNumberDeobfuscation() {
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(new NumberObfuscationChatFilter().deobfuscate(input));
+        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
+
+        assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
+    }
+
+/*    @Test
+    void testWithSymbolObfuscation() {
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(new NumberObfuscationChatFilter().deobfuscate(input));
+        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
+
+        assertEquals(2, violations.get(ChatFilter.ChatViolation.SWEARING));
+
+    }
+
+    @Test
+    void testWithBothObfuscation() {
+        input = new NumberObfuscationChatFilter().deobfuscate(input);
+        input = new SymbolObfuscationChatFilter().deobfuscate(input);
+
+        Map<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
+        assertTrue(violations.containsKey(ChatFilter.ChatViolation.SWEARING));
+
+        assertEquals(3, violations.get(ChatFilter.ChatViolation.SWEARING));
+
+    }*/
 }

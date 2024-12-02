@@ -7,10 +7,10 @@ ChatFilter:
 [x/v] All this system should be ran through Config.yml - Partially finished, just need to input specific area memory mentions
 
 ChatChannels:
-- Allows permanent channels that are both saved in memory & configuration file.
-- Allows ephemeral channels like party channels and such for temporary purposes.
-- Allows admin penetration for dynamical and security purposes.
-- permanent chat channels are saved on Config.yml.
+[] Allows permanent channels that are both saved in memory & configuration file.
+[] Allows ephemeral channels like party channels and such for temporary purposes.
+[] Allows admin penetration for dynamical and security purposes.
+[] permanent chat channels are saved on Config.yml.
 
 ChatControl:
 [] Allows message manipulation of players.

@@ -50,4 +50,8 @@ public class PaperAppLoader extends JavaPlugin {
     public static PaperAppLoader getInstance() {
         return instance;
     }
+
+    public static MinecraftAdapter getMinecraftAdapter() {
+        return instance.minecraftAdapterInstance;
+    }
 }

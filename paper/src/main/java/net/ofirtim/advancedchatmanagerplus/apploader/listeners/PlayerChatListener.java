@@ -8,13 +8,18 @@
 package net.ofirtim.advancedchatmanagerplus.apploader.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.ofirtim.advancedchatmanagerplus.ChatChannel;
+import net.ofirtim.advancedchatmanagerplus.ChatPlayer;
 import net.ofirtim.advancedchatmanagerplus.apploader.PaperAppLoader;
+import net.ofirtim.advancedchatmanagerplus.state.ChatManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class PlayerChatListener implements Listener {
 
     private final PaperAppLoader paperAppLoader;
+    private ChatManager chatManager;
 
     public PlayerChatListener(PaperAppLoader paperAppLoader) {
         this.paperAppLoader = paperAppLoader;
@@ -22,5 +27,8 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
+        Player player = event.getPlayer();
+        ChatPlayer chatPlayer = PaperAppLoader.getMinecraftAdapter().from(player);
+
     }
 }

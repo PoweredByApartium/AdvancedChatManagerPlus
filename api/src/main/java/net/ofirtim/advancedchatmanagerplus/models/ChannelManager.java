@@ -24,7 +24,7 @@ public interface ChannelManager {
 
     /**
      * obtains an immutable copy of all the chat channels the player is in.
-     * This method does not co-respond with critical changes like channel name, channel type or its permission.
+     * This method does not co-respond with critical changes like channel id, channel type or its permission.
      * @param playerUniqueId the player's uniqueId.
      * @return an immutable {@link Set} containing all the channels this player participates in (all chat channel objects are immutable and not runtime relevant).
      */

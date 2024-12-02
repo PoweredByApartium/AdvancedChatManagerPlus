@@ -9,12 +9,13 @@ package net.ofirtim.advancedchatmanagerplus;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
+
 public record ChatChannel(
-        String name,
-        @Nullable String requiredPermission) {
+        String id,
+        @Nullable String requiredPermission,
+        Set<ChatFilter> filters) {
 
     public static final ChatChannel
-            GLOBAL = new ChatChannel("chat", "acmp.channel.global"),
-            STAFF_CHAT = new ChatChannel("staff", "acmp.channel.staff");
-
+            GLOBAL = new ChatChannel("chat", "acmp.channel.global", Set.of());
 }
