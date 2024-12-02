@@ -11,14 +11,7 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
 
     @Override
     public Pattern getFilterPattern() {
-        String symbolKeys = getCharacterStringMap().keySet().stream()
-                .map(String::valueOf)
-                .reduce("", (a, b) -> a + b);
-
-        String regex = "(?!(\\b[()\\d\\s]*\\b|\\d+[+\\-*/^=]\\d+))" +
-                "\\b(?:[a-zA-Z]*[" + Pattern.quote(symbolKeys) + "][a-zA-Z]*)+\\b";
-
-        return Pattern.compile(regex);
+        return null;
     }
 
     @Override
@@ -46,7 +39,6 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
 
                 // Count a violation if the character differs
                 if (originalChar != deobfuscatedChar) {
-                    System.out.println("caught: " + word);
                     wordViolations++;
                 }
             }

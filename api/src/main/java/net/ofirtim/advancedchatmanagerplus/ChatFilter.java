@@ -1,8 +1,9 @@
 package net.ofirtim.advancedchatmanagerplus;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ public interface ChatFilter {
      * Regex patterns to seamlessly catch in-message obfuscations.
      * @return A regex pattern.
      */
-    Pattern getFilterPattern();
+    @Nullable Pattern getFilterPattern();
 
     /**
      * Chat Violation that is related to this ChatFilter.

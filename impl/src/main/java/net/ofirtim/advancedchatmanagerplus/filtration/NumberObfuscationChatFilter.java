@@ -3,29 +3,13 @@ package net.ofirtim.advancedchatmanagerplus.filtration;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import net.ofirtim.advancedchatmanagerplus.ChatFilter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class NumberObfuscationChatFilter implements ChatFilter {
-
-    @Override
-    public Pattern getFilterPattern() {
-        // Match obfuscated digits embedded in words
-        String obfuscatedDigits = "\\b[a-zA-Z]*[0-9]+[a-zA-Z]*\\b";
-
-        // Exclude valid math expressions
-        String mathPattern = "\\b\\d+([+\\-*/^]\\d+)*(=\\d+)?\\b";
-
-        // Exclude valid numeric groups
-        String numericGroupPattern = "\\b\\d+([.,]\\d+)?\\b";
-
-        // Combine patterns using negative lookaheads to exclude math and numeric groups
-        String combinedPattern = "(?!" + mathPattern + "|" + numericGroupPattern + ")" + obfuscatedDigits;
-
-        return Pattern.compile(combinedPattern, Pattern.CASE_INSENSITIVE);
-    }
 
     @Override
     public EnumMap<ChatViolation, Integer> getViolations(String message) {
@@ -63,6 +47,11 @@ public class NumberObfuscationChatFilter implements ChatFilter {
     }
 
     @Override
+    public @Nullable Pattern getFilterPattern() {
+        return null;
+    }
+
+    @Override
     public ChatViolation getRelatedChatViolation() {
         return ChatViolation.NUMBER_OBFUSCATION;
     }
@@ -73,15 +62,25 @@ public class NumberObfuscationChatFilter implements ChatFilter {
         String[] words = possiblyObfuscated.split(" ");
 
         for (String word : words) {
+            // Preserve math expressions
             if (isMathExpression(word)) {
-                result.append(word).append(" "); // Preserve valid math expressions
-            } else if (isNumericGroup(word)) {
-                result.append(word).append(" "); // Preserve valid numeric groups
-            } else {
-                // Deobfuscate numbers based on the replacements
-                String cleanedWord = deobfuscateWord(word);
-                result.append(cleanedWord).append(" ");
+                result.append(word).append(" ");
+                continue;
             }
+
+            // Deobfuscate non-math words
+            StringBuilder cleanedWord = new StringBuilder();
+            String[] segments = word.split("(?<=\\W)|(?=\\W)"); // Split into letters, digits, or symbols
+
+            for (String segment : segments) {
+                if (isNumericGroup(segment) || isMathExpression(segment)) {
+                    cleanedWord.append(segment); // Preserve numbers and math
+                } else {
+                    cleanedWord.append(deobfuscateWord(segment)); // Deobfuscate
+                }
+            }
+
+            result.append(cleanedWord).append(" ");
         }
 
         return result.toString().trim();
