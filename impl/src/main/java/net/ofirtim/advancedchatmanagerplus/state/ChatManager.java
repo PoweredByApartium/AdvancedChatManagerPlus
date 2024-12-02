@@ -17,7 +17,7 @@ public class ChatManager {
 
     SetMultimap<String, ChatFilter> activeFilters = MultimapBuilder.hashKeys().hashSetValues().build(); /*TODO add configuration puller in the near future.*/
     private Set<ChatFilter.ChatViolation> immediateActionViolations = new HashSet<>();
-    private int maxViolationsPerMessage = 5; //TODO add configuration puller in the near future
+    private int maxViolationsPerMessage = 7; //TODO add configuration puller in the near future
 
     public final ChatFilter
             SYMBOL_FILTER = new SymbolObfuscationChatFilter(),
@@ -30,15 +30,18 @@ public class ChatManager {
         EnumMap<ChatFilter.ChatViolation, Integer> totalViolations = new EnumMap<>(ChatFilter.ChatViolation.class);
         MiniMessage miniMessage = MiniMessage.miniMessage();
         String serialized = miniMessage.stripTags(miniMessage.serialize(component));
-
         //an iteration for loop for all active filters for this chat channel.
         for (ChatFilter filter : activeFilters.get(channel)) {
             //Return all possible Violations for this filter
             EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(serialized);
             totalViolations.putAll(violations);
+            System.out.println("collected violations from " + filter.getRelatedChatViolation().name() + ": " + violations);
             //an iteration for loop for all violations as entrys
             for (Map.Entry<ChatFilter.ChatViolation, Integer> entry : violations.entrySet()) {
-                if (immediateActionViolations.contains(entry.getKey())) return new Response(ChatFilter.ActionResult.IMMEDIATE_ACTION, null);
+                if (immediateActionViolations.contains(entry.getKey())) {
+                    System.out.println("Immediate Violation found!");
+                    return new Response(ChatFilter.ActionResult.IMMEDIATE_ACTION, null);
+                }
             }
         }
 

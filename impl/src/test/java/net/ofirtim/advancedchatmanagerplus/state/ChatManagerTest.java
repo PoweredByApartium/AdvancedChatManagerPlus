@@ -18,12 +18,12 @@ class ChatManagerTest {
 
     @Test
     void testResultCompressionAllow() {
-        Component component = MiniMessage.miniMessage().deserialize("Hello world! Th1s !s a nice test!");
-        chatManager.activeFilters.putAll("global", List.of(new NumberObfuscationChatFilter(), new SymbolObfuscationChatFilter()));
+        Component component = MiniMessage.miniMessage().deserialize("H3ll0! W3lc0m3 t0 th!$ $ymb0l-@nd-num3r!c t3$t. 5*5 553344 G00d-luck @nd $tay 4w3$0m3!!!");
+        chatManager.activeFilters.putAll("global", List.of(chatManager.NUMBER_FILTER, chatManager.SYMBOL_FILTER));
         Response result = chatManager.checkMessage("global", component);
 
-        assertEquals(ChatFilter.ActionResult.ALLOW, result.actionResult());
-        assertEquals(2,result.violations().values().stream().mapToInt(Integer::intValue).sum());
+        assertEquals(ChatFilter.ActionResult.DENY, result.actionResult());
+        assertEquals(9,result.violations().values().stream().mapToInt(Integer::intValue).sum());
     }
 
     @Test
