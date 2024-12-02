@@ -20,13 +20,8 @@ public class FloodingChatFilter implements ChatFilter {
 
     @Override
     public Pattern getFilterPattern() {
-        // Dynamic regex for repeated characters
         String charPattern = "(.)\\1{" + (getRepeatedCharThreshold() - 1) + ",}";
-
-        // Dynamic regex for repeated words
         String wordPattern = "\\b(\\w+)\\b(?:\\s*\\1\\b){" + (getRepeatedWordThreshold() - 1) + ",}";
-
-        // Combine both patterns
         return Pattern.compile(charPattern + "|" + wordPattern);
     }
 

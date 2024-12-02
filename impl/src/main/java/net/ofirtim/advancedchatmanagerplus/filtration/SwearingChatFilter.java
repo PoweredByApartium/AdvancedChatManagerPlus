@@ -26,12 +26,11 @@ public class SwearingChatFilter implements ChatFilter {
 
     @Override
     public Pattern getFilterPattern() {
-        // Combine words into a single regex for inner-word detection
         String regex = getBlockedWords().stream()
-                .map(Pattern::quote) // Escapes special characters in the blocked words
-                .reduce((a, b) -> a + "|" + b) // Combine into alternations (word1|word2|...)
-                .orElse(""); // Empty string if no blocked words
+                .map(Pattern::quote)
+                .reduce((a, b) -> a + "|" + b)
+                .orElse("");
 
-        return Pattern.compile("(?i)(" + regex + ")"); // Case-insensitive pattern
+        return Pattern.compile("(?i)(" + regex + ")");
     }
 }

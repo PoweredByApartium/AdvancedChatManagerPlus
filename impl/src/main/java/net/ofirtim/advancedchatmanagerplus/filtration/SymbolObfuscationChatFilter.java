@@ -10,16 +10,14 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
 
     @Override
     public Pattern getFilterPattern() {
-        // Dynamically generate regex for symbols from the obfuscation map
         String symbolKeys = getCharacterStringMap().keySet().stream()
                 .map(String::valueOf)
                 .reduce("", (a, b) -> a + b);
 
-        // Build the regex for matching obfuscated words or symbols
         String regex =
-                "(?<!\\d)" + // Ensure symbols aren't part of numeric groups
-                        "[" + Pattern.quote(symbolKeys) + "]" + // Match only obfuscation symbols
-                        "(?!\\d|[+\\-*/^=])"; // Ensure symbols aren't part of math expressions
+                "(?<!\\d)" +
+                        "[" + Pattern.quote(symbolKeys) + "]" +
+                        "(?!\\d|[+\\-*/^=])";
 
         return Pattern.compile(regex);
     }
