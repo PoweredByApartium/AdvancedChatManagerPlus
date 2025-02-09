@@ -47,11 +47,6 @@ public class NumberObfuscationChatFilter implements ChatFilter {
     }
 
     @Override
-    public @Nullable Pattern getFilterPattern() {
-        return null;
-    }
-
-    @Override
     public ChatViolation getRelatedChatViolation() {
         return ChatViolation.NUMBER_OBFUSCATION;
     }

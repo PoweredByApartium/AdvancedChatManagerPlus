@@ -5,14 +5,8 @@ import net.ofirtim.advancedchatmanagerplus.ChatFilter;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class SymbolObfuscationChatFilter implements ChatFilter {
-
-    @Override
-    public Pattern getFilterPattern() {
-        return null;
-    }
 
     @Override
     public EnumMap<ChatViolation, Integer> getViolations(String message) {
@@ -70,7 +64,18 @@ public class SymbolObfuscationChatFilter implements ChatFilter {
 
             // Skip processing if brackets exist at the start and/or end of the segment
             if (hasOuterBrackets(word)) {
-                result.append(word).append(" ");
+                // Remove the outer brackets temporarily
+                char openingBracket = word.charAt(0);
+                char closingBracket = word.charAt(word.length() - 1);
+                String innerContent = word.substring(1, word.length() - 1);
+
+                // Deobfuscate the inner content
+                String deobfuscatedInner = replaceSymbolsInWord(innerContent);
+
+                // Reconstruct the segment with brackets
+                String reconstructed = openingBracket + deobfuscatedInner + closingBracket;
+
+                result.append(reconstructed).append(" ");
                 continue;
             }
 

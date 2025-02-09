@@ -2,41 +2,42 @@ package net.ofirtim.advancedchatmanagerplus.filtration;
 
 import net.ofirtim.advancedchatmanagerplus.ChatFilter;
 import net.ofirtim.advancedchatmanagerplus.state.ChatManager;
-import org.junit.jupiter.api.Test;
+import org.jetbrains.annotations.Nullable;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public interface ChatFilterTest {
+
+    ChatFilter getFilter();
+
+    Stream<TestCase> getTestCases();
 
     default ChatManager getChatManager() {
         return new ChatManager();
     }
 
-    ChatFilter getFilter();
+    @ParameterizedTest
+    @MethodSource("getTestCases")
+    default void testDeobfuscationAndViolations(TestCase testCase) {
+        String actualOutput = getFilter().deobfuscate(testCase.input());
+        assertEquals(testCase.expectedOutput(), actualOutput, "Deobfuscation output mismatch");
 
-    String getInput();
-
-    String getExpectedOutput();
-
-    int getExpectedViolations();
-
-    @Test
-    default void testDeobfuscationProcess() {
-        String input = getInput();
-        input = getFilter().deobfuscate(input);
-        assertEquals(getExpectedOutput(), input);
-
+        Map<ChatFilter.ChatViolation, Integer> actualViolations = getFilter().getViolations(testCase.input()).get(getFilter().getRelatedChatViolation()) == 0
+                ? Collections.emptyMap()
+                : getFilter().getViolations(testCase.input());
+        assertEquals(testCase.expectedViolations(), actualViolations, "Violation counts mismatch");
     }
 
-    @Test
-    default void testFilterViolationCounter() {
-
-        Map<ChatFilter.ChatViolation, Integer> violations = getFilter().getViolations(getInput());
-
-        assertTrue(violations.containsKey(getFilter().getRelatedChatViolation()));
-
-        assertEquals(getExpectedViolations(), violations.get(getFilter().getRelatedChatViolation()));
-    }
+    record TestCase(
+            String input,
+            String expectedOutput,
+            @Nullable Map<ChatFilter.ChatViolation, Integer> expectedViolations) {}
 }

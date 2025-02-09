@@ -18,7 +18,6 @@ public class FloodingChatFilter implements ChatFilter {
         return 7;
     }
 
-    @Override
     public Pattern getFilterPattern() {
         String charPattern = "(.)\\1{" + (getRepeatedCharThreshold() - 1) + ",}";
         String wordPattern = "\\b(\\w+)\\b(?:\\s*\\1\\b){" + (getRepeatedWordThreshold() - 1) + ",}";
@@ -36,7 +35,7 @@ public class FloodingChatFilter implements ChatFilter {
 
     @Override
     public ChatViolation getRelatedChatViolation() {
-        return ChatViolation.REPEATED_CHARS;
+        return ChatViolation.FLOODING;
     }
 
     @Override

@@ -41,7 +41,7 @@ subprojects {
     repositories {
         maven {
             name = "ApartiumNexus"
-            url = uri("https://nexus.voigon.dev/repository/apartium")
+            url = uri("https://nexus.apartium.net/repository/maven-public")
         }
 
         maven {

@@ -113,7 +113,7 @@ filters:
     check-obfuscation:
       numbers: true
       symbols: true
-      spacers: true
+      addresses: true
     flooding:
       deny-repeated-symbols: true
       deny-repeated-words: true
@@ -121,9 +121,8 @@ filters:
       enabled: true
       max-violations-per-message: 2
       immediate-action-violations:
-        - LINK: '/ban [player] You have tempered with the chat!'
+        - ADDRESS: '/ban [player] You have tempered with the chat!'
         - SWEARING: '/warn [player] Do not swear!'
-
 
 channels:
   global:

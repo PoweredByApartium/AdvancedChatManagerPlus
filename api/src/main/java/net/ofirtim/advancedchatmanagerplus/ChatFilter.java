@@ -13,12 +13,6 @@ import java.util.regex.Pattern;
 public interface ChatFilter {
 
     /**
-     * Regex patterns to seamlessly catch in-message obfuscations.
-     * @return A regex pattern.
-     */
-    @Nullable Pattern getFilterPattern();
-
-    /**
      * Chat Violation that is related to this ChatFilter.
      * @return A ChatViolation.
      */
@@ -30,16 +24,7 @@ public interface ChatFilter {
      * @param message The message to check.
      * @return An Immutable {@link Map}, with {@link ChatViolation} as the key, and {@link Integer} as the amount of violations of the specific key ChatViolation.
      */
-    default EnumMap<ChatViolation, Integer> getViolations(String message) {
-        EnumMap<ChatViolation, Integer> violations = new EnumMap<>(Map.of(getRelatedChatViolation(), 0));
-
-        Matcher matcher = getFilterPattern().matcher(message);
-        while (matcher.find()) {
-            violations.put(getRelatedChatViolation(), violations.get(getRelatedChatViolation()) + 1);
-        }
-
-        return violations;
-    }
+    EnumMap<ChatViolation, Integer> getViolations(String message);
 
 
     /**
@@ -57,7 +42,7 @@ public interface ChatFilter {
         NUMBER_OBFUSCATION,
         SYMBOL_OBFUSCATION,
         SPACER_OBFUSCATION,
-        REPEATED_CHARS,
+        FLOODING,
         SWEARING,
         SPAMMING
     }

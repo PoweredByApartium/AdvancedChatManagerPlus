@@ -4,6 +4,8 @@ import net.ofirtim.advancedchatmanagerplus.ChatFilter;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 class NumberObfuscationChatFilterTest implements ChatFilterTest {
@@ -14,74 +16,44 @@ class NumberObfuscationChatFilterTest implements ChatFilterTest {
     }
 
     @Override
-    public String getInput() {
-        return "Hell0 ma7e h0w are you 445511 5+5+5=10";
+    public Stream<TestCase> getTestCases() {
+        return Stream.of(
+                // Test Case 1: Basic Numeric Conversion
+                new TestCase("Th3 numb3r 1s 10.", "The number is 10.",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 3)),
+
+                // Test Case 2: Mixed Content with Numbers
+                new TestCase("Th3 c0st 0f appl3s 1s $5.", "The cost of apples is $5.",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 5)),
+
+                // Test Case 3: Numbers with Parentheses (No Violations)
+                new TestCase("123 (456)", "123 (456)", Map.of()),
+
+                // Test Case 4: Obfuscated Numbers with Symbols
+                new TestCase("Th3 ph0n3 numb3r 1s 555-1@23.", "The phone number is 555-1@23.",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 5)),
+
+                // Test Case 5: Edge Case - Pure Numbers (No Violations)
+                new TestCase("12345", "12345", Map.of()),
+
+                // Test Case 6: Mixed Obfuscations (Numbers and Symbols)
+                new TestCase("0n3 appl3 c0st5 $1!", "one apple costs $1!",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 5)),
+
+                // Test Case 7: Math Expressions (No Violations)
+                new TestCase("5+5=10", "5+5=10", Map.of()),
+
+                // Test Case 8: Numbers Embedded in Words
+                new TestCase("T3xt c0nta1n1ng numb3rs.", "Text containing numbers.",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 5)),
+
+                // Test Case 9: Long Obfuscated Sentence
+                new TestCase("Th3 5up3r l0ng numb3r 15 r3ally hard t0 gu3ss.",
+                        "The super long number 15 really hard to guess.",
+                        Map.of(ChatFilter.ChatViolation.NUMBER_OBFUSCATION, 8)),
+
+                // Test Case 10: Empty Input
+                new TestCase("", "", Map.of())
+        );
     }
-
-    @Override
-    public String getExpectedOutput() {
-        return "Hello mate how are you 445511 5+5+5=10";
-    }
-
-    @Override
-    public int getExpectedViolations() {
-        return 3;
-    }
-
-    @Test
-    void testMathExpressionAndNumericGroupSkipping() {
-        NumberObfuscationChatFilter filter = new NumberObfuscationChatFilter();
-
-        String input = "1234 5+5+5=10 678.90";
-        String expectedOutput = "1234 5+5+5=10 678.90";
-
-        String deobfuscated = filter.deobfuscate(input);
-        assertEquals(expectedOutput, deobfuscated);
-
-        EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
-        assertEquals(0, violations.get(ChatFilter.ChatViolation.NUMBER_OBFUSCATION).intValue());
-    }
-
-    @Test
-    void testDeobfuscatedShorterThanWord() {
-        NumberObfuscationChatFilter filter = new NumberObfuscationChatFilter();
-
-        String input = "H3y";
-        String expectedOutput = "Hey";
-
-        String deobfuscated = filter.deobfuscate(input);
-        assertEquals(expectedOutput, deobfuscated);
-
-        EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
-        assertEquals(1, violations.get(ChatFilter.ChatViolation.NUMBER_OBFUSCATION).intValue());
-    }
-
-    @Test
-    void testSegmentsContainingMathAndNumericGroups() {
-        NumberObfuscationChatFilter filter = new NumberObfuscationChatFilter();
-
-        String input = "H3y 123+456 123";
-        String expectedOutput = "Hey 123+456 123";
-
-        String deobfuscated = filter.deobfuscate(input);
-        assertEquals(expectedOutput, deobfuscated);
-
-        EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
-        assertEquals(1, violations.get(ChatFilter.ChatViolation.NUMBER_OBFUSCATION).intValue());
-    }
-
-    @Test
-    void testMixedInputWithMathAndObfuscations() {
-        NumberObfuscationChatFilter filter = new NumberObfuscationChatFilter();
-
-        String input = "H3y m4th 5+5 456";
-        String expectedOutput = "Hey math 5+5 456";
-
-        String deobfuscated = filter.deobfuscate(input);
-        assertEquals(expectedOutput, deobfuscated);
-
-        EnumMap<ChatFilter.ChatViolation, Integer> violations = filter.getViolations(input);
-        assertEquals(2, violations.get(ChatFilter.ChatViolation.NUMBER_OBFUSCATION).intValue());
-    }
-
 }
